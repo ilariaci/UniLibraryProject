@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Hello World in Vue.js</title>
+
+<link rel="stylesheet" type="text/css" href="static/mystyle.css"/>
+</head>
+
+
+
+
+<body>
+<div id="books-app" class="container-fluid">
+
+<header role="banner" aria-label="Main banner">	<h1 class="title">UniLibrary</h1>
+	<button id="logout-button" v-if="data.isLoggedInAsStaff || data.isLoggedInAsStudent" v-on:click="logout()">Logout</button>
+</header>
+
+	<nav id="navbar-external-container" aria-label="Main Navigation" role="navigation">
+		<div id="navbar-internal-container">
+			<ul class="navbar">
+				<li class="navbar-item"><!--HOME LINK-->
+									<router-link class="nav-link"  to="/" v-on:click.native="data.wantChat=false">Home</router-link>
+				</li>
+			<!--	<li class="nav-item">
+									<router-link class="nav-link" to="/books" v-on:click.native="data.wantChat=false">Books</router-link>
+				</li>-->
+				<li class="navbar-item"><!--STAFF LOGIN LINK-->
+									<router-link class="nav-link" to="/personnel-login" v-on:click.native="data.wantChat=false">Staff Login</router-link>
+				</li>
+				<li class="navbar-item"><!--CHAT LINK (not router redirected)-->
+				 					<a class="nav-link" v-on:click="data.wantChat=true" > Chat</a>
+				<!--<router-link class="nav-link" to ="/chat">Chat</router-link>-->
+				</li>
+				<li class="navbar-item"><!--BOOK SEARCH LINK-->
+									<router-link class="nav-link" to="/book_search" v-on:click.native="data.wantChat=false" >Book Search</router-link>
+				</li>
+        <li class="navbar-item">
+                  <router-link class="nav-link" to="/student-login" v-if="data.isLoggedInAsStaff==false && data.isLoggedInAsStudent==false" v-on:click.native="data.wantChat=false">Students Login</router-link>
+        </li>
+
+				<!--<li class="nav-item" v-if="data.isStudent===true && data.isLoggedIn===true">
+					<router-link class="nav-link" to="/notifications"  v-on:click.native="data.wantChat=false">Notifications</router-link>
+				</li>-->
+        <li class="navbar-item">
+          <router-link class="nav-link" to="/help" v-on:click.native="data.wantChat=false">Help</router-link>
+        </li>
+        <li class="navbar-item">
+                  <router-link class="nav-link" to="/staff-crud" v-if="data.isLoggedInAsStaff" v-on:click.native="data.wantChat=false">CRUD operations</router-link>
+        </li>
+
+			</ul>
+       <!--<portfolio-projects>P</portfolio-projects>-->
+		</div>
+	</nav>
+
+<main role="main" aria-label="Main Content">
+
+<template v-if="!data.wantChat">
+
+	<router-view></router-view>
+
+</template>
+
+<div id="both-chats">
+	<!--USER CHAT-->
+<template id="#genericUserChat" v-if="!data.isLoggedInAsStaff && data.wantChat">
+		<ul>
+			<li v-for="message in data.messages">
+
+        <div class="chatmessage">  <strong>{{message.from}}:</strong>
+					{{message.content}}
+				</div>
+			</li>
+		</ul>
+				<input type="text" v-model="data.newMsg"  placeholder="Enter message here"/>
+				<div class="chat-buttons">
+										<button v-on:click="sendFromUser()">Send</button>
+										<button v-on:click="data.wantChat=false" v-show="data.wantChat==true">Hide Chat</button>
+										<button v-on:click="data.wantChat=true" v-show="data.wantChat==false">Show Chat</button>
+			 </div>
+</template>
+
+
+<!--STAFF MEMBER CHAT-->
+<template v-else-if="data.isLoggedInAsStaff && data.wantChat">
+
+	<!--<ul id="chat" v-for="id in data.roomIDs" >--> <!--in roomIDs non ci devono essere elementi ripetuti-->
+<!--(1)for messages all together:-->
+<!--<ul id="chat">
+		<li v-for="message in data.messagesForStaff" >
+		{{message.content}}
+	</li>
+</ul>(1)-->
+<div id="chat">
+<ul v-for="id in data.roomIDs">
+<li v-for="message in specific_room_messages(id)" ><!--per ogni stanza-->
+
+				<div class="chatmessage"><strong>{{message.from}}</strong>:{{message.content}}</div>
+
+</li>
+
+	<input type="text" v-model="data.newStaffMessages[id]"  placeholder="Enter message here"/><button v-on:click="sendFromStaff(id)">Send</button>
+</ul>
+</div>
+	<div class="visibility-chat-buttons">
+
+							<button v-on:click="data.wantChat=false" v-show="data.wantChat==true">Hide Chat</button>
+							<!--<button v-on:click="data.wantChat=true" v-show="data.wantChat==false">Show Chat</button>-->
+	</div>
+
+</main>
+
+</template>
+</div>
+<!--<button-counter></button-counter>-->
+
+
+<script type="module ">
+import GlobalComponents from './GlobalComponents/globalComponents'
+</script>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://npmcdn.com/vue-router/dist/vue-router.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+
+<script src="/static/js/button-counter.js"></script>
+<script src="/static/js/home.js"></script>
+<script src="/static/js/reserved.js"></script>
+<script src="/static/js/books.js"></script>
+<script src="/static/js/personnel_login.js"></script>
+<script src="/static/js/chat.js"></script>
+<script src="/static/js/BookTextualSearchComponent.js"></script>
+<script src="/static/js/crud.js"></script>
+<script src="/static/js/404.js"></script>
+<script src="/static/js/help.js"></script>
+<script src="/static/js/students_login.js"></script>
+<script src="/static/js/reservationError.js"></script>
+<script src="/static/js/router.js"></script>
+<!--For the vue-devtools connection (start)-->
+<script src="http://localhost:8098"></script>
+<!--for vue-devtools connection (end)-->
+<!--socket.io-->
+
+<script>
+
+	var data = {newStaffMessages:{},current_room:null,find:false,roomIDs:[],message:"",local_chat_message:null,newMsg:null,roomID:null,isLoggedInAsStaff:false, isLoggedInAsStudent:false,wantChat:false,"newMessage":null, messages:[], messagesForStaff:[]};
+
+
+
+	//chats:[{"roomID":"3792428","messages":[{"content":"Hi","from":"camillo","number":"1"},{"content":"wut up","from":"me","number":"2"}]},{"roomID":"86958540","messages":[{"content":"So","from":"rinaldo"},{"content":"nothing","from":"me"}]}]}
+	//messages[]->message.content,message.counterpart,message.sender
+	//in previsione del fatto che in un secondo momento potrebbero essere inseriti altri ruoli oltre a quello
+	//di studente e membro dello staff,in più di migliora la leggibilità del codice
+	var socket=io();
+	if(!data.isLoggedInAsStaff){
+		console.log("add user lato client tramite socket");
+		socket.emit('add user');
+
+	}
+
+  //se si tratta di un messaggio dall'admin all'utente , la risposta conterrà la roomID
+	//se si tratta di un messaggio da un utente ad uno o più admin, la roomID è la socket.id quindi
+	//è presente nella socket attraverso la quale si comunica, si invia solo il messaggio (il server aggiungerà poi la rispettiva roomID)
+
+
+
+
+//RICEZIONE MESSAGGIO:
+/*
+Quando un utente riceve un messaggio deve prenderlo e copiarlo in messages.
+(roomID non necessario)
+Quando un admin riceve un messaggio deve copiarlo nella corretta chat usando roomID
+per capire dove posizionarlo. (roomID deve essere contenuto nel messaggio)
+
+
+
+*/
+
+
+  socket.on('prova prova',function(){console.log("ricevuto evento prova prova")});
+	socket.on('welcome msg',(message)=>{data.messages.push({content:message,from:"server"})});
+	//socket.on('chat message',function(message){console.log("ricevuto evento chat message"+message)});
+	  socket.on('chat message',(chat_message)=>{
+				console.log("chat message"+chat_message.content);
+				console.log("chat message roomID"+chat_message.roomID);
+    		data.local_chat_message=chat_message;
+				console.log("local chat message roomID:"+data.local_chat_message.roomID);
+				console.log("chat message roomID:"+chat_message.roomID);
+				if(data.isLoggedInAsStaff){
+
+          data.find=data.roomIDs.includes(data.local_chat_message.roomID);
+
+					if(!data.find)
+					{
+						data.roomIDs.push(data.local_chat_message.roomID);
+						console.log("find:"+data.find+"local_chat_message.roomID"+data.local_chat_message.roomID);
+
+					}
+
+					data.messagesForStaff.push({roomID:data.local_chat_message.roomID,content:data.local_chat_message.content,from:"user"});
+					console.log("inserting "+data.local_chat_message.roomID+" "+chat_message.content);
+
+
+				}else{
+					//socket.on('chat message',(response)=>{data.messages.push({content:response,from:"Librarian"})});
+					data.messages.push({content:chat_message.content,from:"Librarian"});
+				console.log("messages ora contiene "+data.messages);
+			}
+				});
+
+  var app = new Vue({
+		//to launch  Tools for debugging on a command prompt: vue-devtools
+		router,
+		el: "#books-app",
+	//(*)	components:{Chat}
+		data:data,
+		watch:{
+			isLoggedInAsStaff:function(){
+				if(data.isLoggedInAsStaff===true)
+				{
+					socket.emit('add staff member');
+					console.log('adding staff member');
+				}
+			},
+			//socket add staff member
+      isLoggedInAsStudent:function(){
+        if(data.isLoggedInAsStudent==true){
+          socket.emit('student notifications',{token:localStorage.getItem('AccessToken')});
+          //passiamo il token al server per poter ricavare la institutional_email dello studente e
+          //reperire le relative notifiche
+          }
+          console.log('emit student notifications');
+        }
+      }
+
+		,
+
+
+
+		methods:{
+			specific_room_messages:function(id){
+				return data.messagesForStaff.filter(function(message){
+					return message.roomID==id
+				})
+			},
+      logout:function(){
+        data.isLoggedInAsStaff=false;
+        data.isLoggedInAsStudent=false;
+        localStorage.removeItem('AccessToken');
+        this.$router.push('/personnel-login');
+				socket.emit('disconnect')
+
+      },
+
+
+
+
+			sendFromStaff:function(roomID){//passato dal template
+				console.log("roomID"+roomID);
+				if(roomID)//not null undefined etc invalid
+				{
+					data.messagesForStaff.push({roomID:roomID,content:this.newStaffMessages[roomID],from:"Me"});
+					socket.emit('chat message',{content:this.newStaffMessages[roomID],roomID:roomID});
+					console.log("nuovo messaggio : "+this.newStaffMessages[roomID])
+					this.newStaffMessages[roomID]=null;
+					
+
+				}
+			},//end sendFromStaff
+			sendFromUser:function(){
+				data.messages.push({content:this.newMsg,from:"Me"});
+
+				socket.emit('chat message',{content:this.newMsg,roomID:null});//il server pone la roomID
+				this.newMsg=null; //v-model ci permette di creare un 2 way binding e di "svuotare" la cella di input ,che sarà così pronta per un nuovo input,
+				//assegnando alla buonded variable il valore null
+			}
+		}
+
+
+	});
+	Vue.config.devtools = true;
+</script>
+
+</body>
+</html>
