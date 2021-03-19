@@ -57,7 +57,7 @@ nav li.navbar-item {
   border-radius: 5px;
   content: none;
 }
-nav li.book-element {
+nav li.navbar-item .book-element {
   display: block;
   background-color: black;
 }
@@ -74,53 +74,45 @@ nav a:hover {
 div {
   padding: 0.3%;
 }
-div #login {
+div .centering, div #search_book_CRUD, div .book, div #textual-search, div #login {
   text-align: center;
+}
+div .for_books, div .book_crud, div .book {
+  border: solid;
+  border-radius: 7px;
+  background-color: black;
+}
+div .center_the_dark {
+  text-align: center;
+  background-color: black;
+}
+div .on_the_left {
+  text-align: left;
+}
+div .crud_buttons {
+  text-align: right;
 }
 div .others {
   text-align: center;
   background-color: black;
   border-radius: 8px;
 }
-div #textual-search {
-  text-align: center;
-}
-div .book {
-  border: solid;
-  background-color: black;
-  border-radius: 7px;
-}
-
-form {
-  padding: 70px;
-}
-
-div.chatmessage {
+div .chatmessage {
   background-color: black;
 }
-
-div.book_list_element {
+div .book_list_element {
   background-color: black;
   list-style: none;
   text-align: left;
   padding: 0;
   margin: 0;
 }
-
-div.sub_id_piece {
-  text-align: left;
-}
-
-div._id_piece_display {
-  text-align: left;
-}
-
-div#search_book_CRUD {
-  text-align: center;
-}
-
-div#new_search {
+div #new_search {
   text-align: right;
+}
+
+form {
+  padding: 70px;
 }
 
 h1 {

@@ -37,8 +37,8 @@ const CRUD = {
 
 
   <div  v-for="(book,index) in books" :key="books._id">
-        <div class="book">
-        <!--  <h5 class="card-title">{{book}}</h5>-->
+        <div class="book_crud">
+
 
 
 
@@ -48,88 +48,106 @@ const CRUD = {
                <input class="_id_piece_input" type="text" v-if="isVisibleId(index)" v-model="book._id"/>
                <div class="_id_piece_display" v-else >{{book._id}}</div>
            </div>
-
-            <button class="pencil_button" v-show="!isVisibleId(index)" v-on:click="indexIdVisibility[index]=true;$forceUpdate()">Modify</button>
-            <button class="done_button" v-show="isVisibleId(index)" v-on:click="indexIdVisibility[index]=false;$forceUpdate()" >Done</button>
-
+            <div class="crud_buttons">
+              <button  v-show="!isVisibleId(index)" v-on:click="indexIdVisibility[index]=true;$forceUpdate()">Modify</button>
+              <button  v-show="isVisibleId(index)" v-on:click="indexIdVisibility[index]=false;$forceUpdate()" >Done</button>
+            </div>
           </div>
 
           <div class="title_piece">
             <strong>Title: </strong>
             <input class="title_piece_input" type="text" v-if="isVisibleTitle(index)" v-model="book.title"/>
             <div class="title_piece_display" v-else >{{book.title}}</div>
-            <button class="pencil_button" v-if="!isVisibleTitle(index)" v-on:click="indexTitleVisibility[index]=true;$forceUpdate()">Modify</button>
-            <button class="done_button" v-if="isVisibleTitle(index)" v-on:click="indexTitleVisibility[index]=false;$forceUpdate()">Done</button>
+            <div class="crud_buttons">
+              <button class="pencil_button" v-if="!isVisibleTitle(index)" v-on:click="indexTitleVisibility[index]=true;$forceUpdate()">Modify</button>
+              <button class="done_button" v-if="isVisibleTitle(index)" v-on:click="indexTitleVisibility[index]=false;$forceUpdate()">Done</button>
+            </div>
           </div>
 
           <div class="authors_piece">
             <strong>Authors: </strong>
             <input class="authors_piece_input" type="text" v-if="isVisibleAuthors(index)" v-model="book.authors"/>
             <div class="authors_piece_display" v-else >{{book.authors}}</div>
-            <button class="pencil_button" v-if="!isVisibleAuthors(index)" v-on:click="indexAuthorsVisibility[index]=true;$forceUpdate()">Modify</button>
-            <button class="done_button" v-if="isVisibleAuthors(index)" v-on:click="indexAuthorsVisibility[index]=false;$forceUpdate()">Done</button>
+            <div class="crud_buttons">
+              <button class="pencil_button" v-if="!isVisibleAuthors(index)" v-on:click="indexAuthorsVisibility[index]=true;$forceUpdate()">Modify</button>
+              <button class="done_button" v-if="isVisibleAuthors(index)" v-on:click="indexAuthorsVisibility[index]=false;$forceUpdate()">Done</button>
+            </div>
           </div>
 
           <div class="book_id_piece">
             <strong>Book_id: </strong>
             <input class="book_id_piece_input" type="text" v-if="isVisibleBookId(index)" v-model="book.book_id"/>
             <div class="book_id_piece_display" v-else >{{book.book_id}}</div>
-            <button class="pencil_button" v-if="!isVisibleBookId(index)" v-on:click="indexBookIdVisibility[index]=true;$forceUpdate()">Modify</button>
-            <button class="done_button" v-if="isVisibleBookId(index)" v-on:click="indexBookIdVisibility[index]=false;$forceUpdate()">Done</button>
-          </div>
+            <div class="crud_buttons">
+              <button class="pencil_button" v-if="!isVisibleBookId(index)" v-on:click="indexBookIdVisibility[index]=true;$forceUpdate()">Modify</button>
+              <button class="done_button" v-if="isVisibleBookId(index)" v-on:click="indexBookIdVisibility[index]=false;$forceUpdate()">Done</button>
+            </div>
+           </div>
 
           <div class="last_active_borrow_piece">
             <strong>Last Active Borrow: </strong>
             <input class="last_active_borrow_piece_input" type="text" v-if="isVisibleLastActiveBorrow(index)" v-model="book.last_active_borrow"/>
             <div class="last_active_borrow_piece_display" v-else >{{book.last_active_borrow}}</div>
-            <button class="pencil_button" v-if="!isVisibleLastActiveBorrow(index)" v-on:click="indexLastActiveBorrowVisibility[index]=true;$forceUpdate()">Modify</button>
-            <button class="done_button" v-if="isVisibleLastActiveBorrow(index)" v-on:click="indexLastActiveBorrowVisibility[index]=false;$forceUpdate()">Done</button>
+            <div class="crud_buttons">
+              <button class="pencil_button" v-if="!isVisibleLastActiveBorrow(index)" v-on:click="indexLastActiveBorrowVisibility[index]=true;$forceUpdate()">Modify</button>
+              <button class="done_button" v-if="isVisibleLastActiveBorrow(index)" v-on:click="indexLastActiveBorrowVisibility[index]=false;$forceUpdate()">Done</button>
+            </div>
           </div>
 
 
           <div class="topics_piece">
-          <strong>Topics: </strong>
-          <input class="topics_piece_input" type="text" v-if="isVisibleTopics(index)" v-model="book.topics"/>
-          <div class="topics_piece_display" v-else>{{book.topics}}</div>
-          <button class="pencil_button" v-if="!isVisibleTopics(index)" v-on:click="indexTopicsVisibility[index]=true;$forceUpdate()">Modify</button>
-          <button class="done_button" v-if="isVisibleTopics(index)" v-on:click="indexTopicsVisibility[index]=false;$forceUpdate()">Done</button>
+            <strong>Topics: </strong>
+            <input class="topics_piece_input" type="text" v-if="isVisibleTopics(index)" v-model="book.topics"/>
+            <div class="topics_piece_display" v-else>{{book.topics}}</div>
+            <div class="crud_buttons">
+              <button class="pencil_button" v-if="!isVisibleTopics(index)" v-on:click="indexTopicsVisibility[index]=true;$forceUpdate()">Modify</button>
+              <button class="done_button" v-if="isVisibleTopics(index)" v-on:click="indexTopicsVisibility[index]=false;$forceUpdate()">Done</button>
+            </div>
           </div>
 
           <div class="publication_date_piece">
-          <strong>Publication Date: </strong>
-          <input class="publication_date_piece_input" type="text" v-if="isVisiblePublicationDate(index)" v-model="book.publication_date"/>
-          <div class="publication_date_piece_display" v-else> {{book.publication_date}} </div>
-          <button class="pencil_button" v-if="!isVisiblePublicationDate(index)" v-on:click="indexPublicationDateVisibility[index]=true;$forceUpdate()">Modify</button>
-          <button class="done_button" v-if="isVisiblePublicationDate(index)" v-on:click="indexPublicationDateVisibility[index]=false;$forceUpdate()">Done</button>
+            <strong>Publication Date: </strong>
+            <input class="publication_date_piece_input" type="text" v-if="isVisiblePublicationDate(index)" v-model="book.publication_date"/>
+            <div class="publication_date_piece_display" v-else> {{book.publication_date}} </div>
+            <div class="crud_buttons">
+              <button class="pencil_button" v-if="!isVisiblePublicationDate(index)" v-on:click="indexPublicationDateVisibility[index]=true;$forceUpdate()">Modify</button>
+              <button class="done_button" v-if="isVisiblePublicationDate(index)" v-on:click="indexPublicationDateVisibility[index]=false;$forceUpdate()">Done</button>
+            </div>
           </div>
 
           <div class="edition_piece">
-          <strong>Edition: </strong>
-          <input class="edition_piece_input" type="text" v-if="isVisibleEdition(index)" v-model="book.edition"/>
-          <div class="edition_piece_display" v-else>{{book.edition}}</div>
-          <button class="pencil_button" v-if="!isVisibleEdition(index)" v-on:click="indexEditionVisibility[index]=true;$forceUpdate()">Modify</button>
-          <button class="done_button" v-if="isVisibleEdition(index)" v-on:click="indexEditionVisibility[index]=false;$forceUpdate()">Done</button>
+            <strong>Edition: </strong>
+            <input class="edition_piece_input" type="text" v-if="isVisibleEdition(index)" v-model="book.edition"/>
+            <div class="edition_piece_display" v-else>{{book.edition}}</div>
+            <div class="crud_buttons">
+              <button class="pencil_button" v-if="!isVisibleEdition(index)" v-on:click="indexEditionVisibility[index]=true;$forceUpdate()">Modify</button>
+              <button class="done_button" v-if="isVisibleEdition(index)" v-on:click="indexEditionVisibility[index]=false;$forceUpdate()">Done</button>
+            </div>
           </div>
 
           <div class="status_piece">
-          <strong>Status: </strong>
-          <input class="status_piece_input" type="text" v-if="isVisibleStatus(index)" v-model="book.status"/>
-          <div class="status_piece_display" v-else>{{book.status}}</div>
-          <button class="pencil_button" v-if="!isVisibleStatus(index)" v-on:click="indexStatusVisibility[index]=true;$forceUpdate()">Modify</button>
-          <button class="done_button" v-if="isVisibleStatus(index)" v-on:click="indexStatusVisibility[index]=false;$forceUpdate()">Done</button>
+            <strong>Status: </strong>
+            <input class="status_piece_input" type="text" v-if="isVisibleStatus(index)" v-model="book.status"/>
+            <div class="status_piece_display" v-else>{{book.status}}</div>
+            <div class="crud_buttons">
+              <button class="pencil_button" v-if="!isVisibleStatus(index)" v-on:click="indexStatusVisibility[index]=true;$forceUpdate()">Modify</button>
+              <button class="done_button" v-if="isVisibleStatus(index)" v-on:click="indexStatusVisibility[index]=false;$forceUpdate()">Done</button>
+            </div>
           </div>
 
           <div class="description_for_textual_search_piece">
-          <strong>Description for textual search: </strong>
-          <input class="description_for_textual_search_piece_input" type="text" v-if="isVisibleDescriptionForTextualSearch(index)" v-model="book.description_for_textual_search"/>
-          <div class="description_for_textual_search_piece_display" v-else>{{book.description_for_textual_search}}</div>
-          <button class="pencil_button" v-if="!isVisibleDescriptionForTextualSearch(index)" v-on:click="indexDescriptionForTextualSearchVisibility[index]=true;$forceUpdate()">Modify</button>
-          <button class="done_button" v-if="isVisibleDescriptionForTextualSearch(index)" v-on:click="indexDescriptionForTextualSearchVisibility[index]=false;$forceUpdate()">Done</button>
+            <strong>Description for textual search: </strong>
+            <input class="description_for_textual_search_piece_input" type="text" v-if="isVisibleDescriptionForTextualSearch(index)" v-model="book.description_for_textual_search"/>
+            <div class="description_for_textual_search_piece_display" v-else>{{book.description_for_textual_search}}</div>
+            <div class="crud_buttons">
+              <button class="pencil_button" v-if="!isVisibleDescriptionForTextualSearch(index)" v-on:click="indexDescriptionForTextualSearchVisibility[index]=true;$forceUpdate()">Modify</button>
+              <button class="done_button" v-if="isVisibleDescriptionForTextualSearch(index)" v-on:click="indexDescriptionForTextualSearchVisibility[index]=false;$forceUpdate()">Done</button>
+            </div>
           </div>
 
         </div>
-        <button id="update_button" class="crud_buttons" v-on:click="updateBookCRUD(index,book._id)">Update</button>
-        <button id="delete_button" class="crud_buttons" v-on:click="deleteBookCRUD(index,book._id)">Delete</button>
+        <button  class="update_button"  v-on:click="updateBookCRUD(index,book._id)">Update</button>
+        <button  class="delete_button"  v-on:click="deleteBookCRUD(index,book._id)">Delete</button>
   </div>
   <div id="not_found_msg">{{msg}}</div>
 

@@ -69,10 +69,9 @@ nav
     border-radius: 5px
     content: none
 
-  li.book-element
-    display: block
-    background-color: $darkest-color
-
+    .book-element
+      display: block
+      background-color: $darkest-color
 
 
 
@@ -86,48 +85,89 @@ nav
     color: #ADFF2F
 
 
+
+
 //Benvenuta in unilibrary centered:
 div
 
   padding: 0.3%
-  .router-view-content
+
   //text-align: center
+  .centering
+    text-align: center
+  .for_books
+    border: solid
+    border-radius: 7px
+    background-color: $darkest-color
+
+  .center_the_dark
+    text-align: center
+    background-color: $darkest-color
+  .on_the_left
+    text-align: left
+
+
+
 
   #login
-    text-align: center
-
+    @extend .centering
+  .crud_buttons
+    text-align: right
   .others
     text-align: center
     background-color: $darkest-color
     border-radius: 8px
   #textual-search
-    text-align: center
+    @extend .centering
   .book
-    border: solid
-    background-color: black
-    border-radius: 7px
+    @extend .centering
+    @extend .for_books
+
+  .book_crud
+    @extend .for_books
+
+  .chatmessage
+    background-color: $darkest-color
+  .book_list_element
+    background-color: $darkest-color
+    list-style: none
+    text-align: left
+    padding: 0
+    margin: 0
+
+
+  #search_book_CRUD
+    @extend .centering
+  #new_search
+    text-align: right
+
+
+
 
 form
   padding: 70px
 
+//div.chatmessage
+       background-color: $darkest-color
 
-div.chatmessage
-     background-color: black
-div.book_list_element
-     background-color: black
-     list-style: none
-     text-align: left
-     padding: 0
-     margin: 0
+//div.book_list_element
+       background-color: $darkest-color
+       list-style: none
+       text-align: left
+       padding: 0
+       margin: 0
 
-div.sub_id_piece
-  text-align: left
-div._id_piece_display
-  text-align: left
-div#search_book_CRUD
-  text-align: center
-div#new_search
-  text-align: right
+//div.sub_id_piece
+    text-align: left
+//div._id_piece_display
+    text-align: left
+//div#search_book_CRUD
+    text-align: center
+//div#new_search
+    text-align: right
+
+
+
 
 
 
@@ -170,10 +210,12 @@ button
   padding: 10px 30px
   border: none
   color: $darkest-color
+  
 
 
 button:hover
   background-color: #ADFF2F
+
 
 
 label.visuallyhidden

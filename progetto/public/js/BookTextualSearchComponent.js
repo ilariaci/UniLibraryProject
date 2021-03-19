@@ -28,6 +28,7 @@ var BookTextualSearchComponent=
                   </div>
                   </li>
                   </ul>
+                  
 
                 </div>
 
